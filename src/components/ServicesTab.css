@@ -1,0 +1,123 @@
+/* src/components/ServicesTab.css */
+
+.services-tab {
+  background: #fff0f4;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.section-title {
+  color: #ff497c;
+  margin-bottom: 10px;
+}
+
+.services-list {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.service-btn {
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: 2px solid #ff497c;
+  background-color: #fff;
+  color: #ff497c;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.service-btn.active,
+.service-btn:hover {
+  background-color: #ff497c;
+  color: #fff;
+}
+
+.pet-selector {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ff497c;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* Calendar Grid */
+.calendar-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.calendar-day {
+  background-color: #fff0f4;
+  border: 1px solid #ffc8dd;
+  border-radius: 15px;
+  padding: 10px;
+  flex: 1 1 150px;
+}
+
+.day-header {
+  font-weight: bold;
+  color: #ff1d6c;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.day-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.slot {
+  padding: 6px 0;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.slot.available {
+  background-color: #ffcad4;
+  color: #ff1d6c;
+}
+
+.slot.available:hover {
+  background-color: #ff497c;
+  color: #fff;
+}
+
+.slot.unavailable {
+  background-color: #f0f0f0;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Legend */
+.legend {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.available-legend,
+.unavailable-legend {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.available-legend {
+  background-color: #ffcad4;
+}
+
+.unavailable-legend {
+  background-color: #f0f0f0;
+}

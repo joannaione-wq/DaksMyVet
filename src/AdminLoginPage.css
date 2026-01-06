@@ -1,0 +1,131 @@
+/* AdminLoginPage.css */
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffe6f0; /* subtle pink, matches homepage theme */
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.navbar a.active {
+  color: #f06292; /* highlight active page */
+}
+
+/* Center login form */
+.admin-login-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.admin-login-form {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.admin-login-form h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.admin-login-form .error {
+  color: red;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.admin-login-form label {
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #ccc;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.admin-login-submit {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #f06292; /* matches homepage pink */
+  color: #f7efef;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: 0.3s;
+}
+
+.admin-login-submit:hover {
+  background-color: #ec407a;
+}
+
+.admin-login-form .login-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.admin-login-form .login-link {
+  color: #f06292;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.admin-login-form .login-link:hover {
+  text-decoration: underline;
+}

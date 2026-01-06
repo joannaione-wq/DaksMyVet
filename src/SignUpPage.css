@@ -1,0 +1,150 @@
+/* PAGE */
+.signup-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f1b1c9cd; 
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar .logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+}
+
+.navbar a.active {
+  color: #2d6cdf;
+}
+
+/* CENTER CONTAINER */
+.signup-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM CARD (MATCH LOGIN) */
+.signup-form {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px; /* SAME SIZE AS LOGIN */
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* TITLE */
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 14px;
+  color: #333;
+}
+
+/* ERROR */
+.signup-form .error {
+  color: #d32f2f;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* LABELS */
+.signup-form label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+/* INPUTS */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9e9e9e;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.input-with-icon input:focus {
+  outline: none;
+  border-color: #2d6cdf;
+}
+
+/* SUBMIT BUTTON – MATCH LOGIN */
+.signup-submit {
+  display: block;
+  margin: 18px auto 0; /* centers horizontally */
+  padding: 10px 28px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2d6cdf;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+}
+
+.signup-submit:hover {
+  background-color: #1f57b8;
+}
+
+.signup-submit:disabled {
+  background-color: #9bb7ea;
+  cursor: not-allowed;
+}
+
+/* LOGIN LINK */
+.signup-form .login-text {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.signup-form .login-link {
+  color: #2d6cdf;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-form .login-link:hover {
+  text-decoration: underline;
+}

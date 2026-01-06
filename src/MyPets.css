@@ -1,0 +1,98 @@
+.mypets-container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mypets-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2e3a59;
+  margin-bottom: 25px;
+}
+
+.mypets-icon {
+  color: #5a8dee;
+}
+
+.refresh-btn {
+  background-color: #5a8dee;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.refresh-btn:hover {
+  background-color: #476ec5;
+}
+
+.mypets-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.pet-card {
+  background: #f8f9ff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: transform 0.2s ease;
+}
+
+.pet-card:hover {
+  transform: translateY(-4px);
+}
+
+.pet-info h3 {
+  margin: 0 0 8px;
+  color: #2e3a59;
+}
+
+.pet-info p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.delete-btn {
+  background-color: #ff5c5c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  transition: background 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #e04848;
+}
+
+.mypets-loading,
+.mypets-empty {
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+}

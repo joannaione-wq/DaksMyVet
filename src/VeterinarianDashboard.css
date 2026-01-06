@@ -1,0 +1,373 @@
+/* ------------------ General Layout ------------------ */
+.vet-dashboard {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+/* ------------------ Sidebar ------------------ */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff6f91;
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  background-color: #ff6f91;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logout-btn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background-color: #ff6f91;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #ff4c70;
+}
+
+/* ------------------ Main Content ------------------ */
+.main {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+/* ------------------ Stats Cards ------------------ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card h4 {
+  margin: 10px 0 5px;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ff6f91;
+}
+
+/* ------------------ Tables ------------------ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+th {
+  background-color: #ffe6eb;
+  font-weight: 600;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* ------------------ Action Buttons ------------------ */
+.actions-btns button {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #fff;
+}
+
+.actions-btns button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.actions-btns button:nth-child(1) {
+  background-color: #ff6f91; /* Confirm */
+}
+
+.actions-btns button:nth-child(2) {
+  background-color: #4caf50; /* Complete */
+}
+
+.actions-btns button:nth-child(3) {
+  background-color: #3498db; /* Reschedule */
+}
+
+.actions-btns button:last-child {
+  background-color: #dc2626; /* Cancel */
+}
+
+.actions-btns button:hover:enabled {
+  opacity: 0.9;
+}
+
+/* ------------------ Modal ------------------ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.modal h3 {
+  margin-bottom: 15px;
+}
+
+.modal h4 {
+  margin: 15px 0 8px;
+  color: #ff6f91;
+}
+
+.modal ul {
+  padding-left: 18px;
+  margin-bottom: 10px;
+}
+
+.modal li {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal button {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.modal button:first-of-type {
+  background-color: #ff6f91;
+  color: #fff;
+  margin-right: 6px;
+}
+
+.modal button:first-of-type:hover {
+  background-color: #ff4c70;
+}
+
+.close-btn {
+  background-color: #ccc !important;
+  color: #333 !important;
+}
+
+/* ------------------ Responsive ------------------ */
+@media (max-width: 768px) {
+  .vet-dashboard {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .main {
+    padding: 15px;
+  }
+}
+.vet-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff6f91;
+}
+
+.profile-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.edit-profile-btn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.edit-profile-btn:hover {
+  background-color: #2a7cb8;
+}
+/* ------------------ Profile Section ------------------ */
+/* Profile Section */
+.vet-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.vet-profile .profile-pic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #ff6f91;
+}
+
+.vet-profile span {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Sidebar buttons (tabs + logout + edit profile) */
+.sidebar button {
+  display: flex;
+  align-items: center;
+  gap: 8px;             /* space between icon and text */
+  width: 100%;
+  padding: 10px 16px;
+  background: none;      /* default transparent */
+  color: #333;           /* default text color */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+/* Hover / active state */
+.sidebar button:hover,
+.sidebar button.active {
+  background-color: #ff6f91;  /* match dashboard highlight */
+  color: #fff;                 /* white text on hover */
+}
+
+/* Logout button (same style as other buttons) */
+.logout-btn {
+  margin-top: 12px;    /* spacing below other buttons/profile */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  background: none;    /* same as other buttons */
+  color: #333;         /* same as other buttons */
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.logout-btn svg {
+  color: inherit;       /* icon matches text */
+}
+
+.logout-btn:hover {
+  background-color: #ff6f91;
+  color: #fff;
+  transform: translateY(-1px);
+}

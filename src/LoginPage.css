@@ -1,0 +1,207 @@
+/* LoginPage.css */
+
+/* GENERAL PAGE LAYOUT */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background-color: #e788aacd; /* subtle pink background */
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #f06292; /* highlight active page */
+}
+
+/* LOGIN FORM CENTERING */
+.login-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-form {
+  background-color: #fff;
+  padding: 2.5rem 3rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.login-form .error {
+  color: #d32f2f;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  background-color: #ffebee;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* FORM LABELS & INPUTS */
+.login-form label {
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #999;
+  width: 20px;
+  height: 20px;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.input-with-icon input:focus {
+  border-color: #f06292;
+  box-shadow: 0 0 5px rgba(240, 98, 146, 0.3);
+  outline: none;
+}
+
+/* LOGIN BUTTON */
+.login-submit {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #f06292;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+.login-submit:hover:not(:disabled) {
+  background-color: #ec407a;
+}
+
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* LINKS BELOW FORM */
+.login-form .signup-text,
+.login-form .forgot-password-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.login-form .signup-link,
+.login-form .forgot-password-link {
+  color: #f06292;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.login-form .signup-link:hover,
+.login-form .forgot-password-link:hover {
+  text-decoration: underline;
+  color: #ec407a;
+}
+
+/* FORGOT PASSWORD LINK */
+.login-form .forgot-password-text {
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+  
+  .navbar .logo {
+    font-size: 1.2rem;
+  }
+  
+  .navbar ul {
+    gap: 1rem;
+  }
+  
+  .login-form {
+    padding: 2rem 1.5rem;
+  }
+  
+  .login-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar ul {
+    gap: 0.5rem;
+  }
+  
+  .navbar a {
+    font-size: 0.9rem;
+  }
+}
