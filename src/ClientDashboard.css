@@ -172,6 +172,12 @@ table th {
   border-radius: 10px;
   width: 320px;
   max-width: 90%;
+  }
+
+  .service-booking-modal.modal-content {
+    width: 90%;
+    max-width: 900px;
+    padding: 30px;
 }
 
 .modal-content h4 {
@@ -1966,6 +1972,416 @@ button {
   max-width: 750px;
   width: 100%;
   padding: 30px;
+}
+
+/* ========================================
+   SERVICE BOOKING MODAL STYLES
+======================================== */
+.service-booking-modal {
+  max-width: 900px;
+  width: 90%;
+  padding: 30px;
+}
+
+.service-booking-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+  .service-booking-modal .modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+
+  .service-booking-modal .modal-buttons button {
+    padding: 10px 20px;
+  }
+.service-booking-image {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.service-booking-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.service-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.service-details h5 {
+  font-size: 1.3rem;
+  margin: 0;
+  color: #333;
+}
+
+.service-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.service-price-large {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b6b;
+  margin: 10px 0 0 0;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.form-group select,
+.form-group input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.form-group select:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.price-summary {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 4px solid #ff6b6b;
+}
+
+.price-summary p {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-summary strong {
+  color: #ff6b6b;
+}
+
+/* ========================================
+   PAYMENT MODAL STYLES
+======================================== */
+.payment-modal {
+  max-width: 500px;
+}
+
+.payment-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.payment-summary {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.payment-summary h5 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.summary-row:last-of-type {
+  border-bottom: none;
+}
+
+.summary-row.total {
+  border-bottom: none;
+  padding-top: 15px;
+  padding-bottom: 0;
+  font-size: 1.1rem;
+}
+
+.summary-row.total .amount {
+  color: #ff6b6b;
+  font-size: 1.3rem;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-info h5 {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.payment-method {
+  background-color: #f0f9ff;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #bde0ff;
+}
+
+.payment-method p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+.payment-method p:first-child {
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.gcash-number {
+  color: #666;
+  font-family: monospace;
+}
+
+.payment-note {
+  background-color: #fff3cd;
+  padding: 12px;
+  border-radius: 5px;
+  border-left: 4px solid #ffc107;
+  font-size: 0.9rem;
+  color: #856404;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ========================================
+   REFERENCE CONFIRMATION MODAL STYLES
+======================================== */
+.reference-modal {
+  max-width: 500px;
+}
+
+.confirmation-content {
+  margin-bottom: 30px;
+}
+
+.confirmation-content p:first-child {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.confirmation-details {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.confirmation-details p {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.confirmation-details strong {
+  color: #333;
+}
+
+.confirmation-note {
+  background-color: #e8f5e9;
+  padding: 12px;
+  border-radius: 5px;
+  border-left: 4px solid #4caf50;
+  font-size: 0.9rem;
+  color: #2e7d32;
+  line-height: 1.5;
+}
+
+/* ========================================
+   MODAL BUTTONS STYLES
+======================================== */
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background-color: #ff5252;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.primary-btn:disabled {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.secondary-btn:hover {
+  background-color: #e8e8e8;
+  border-color: #999;
+}
+
+/* ========================================
+   SUCCESS MODAL STYLES
+======================================== */
+.success-modal {
+  max-width: 550px;
+  text-align: center;
+}
+
+.success-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.success-icon {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-message {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+.next-steps {
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #bde0ff;
+  text-align: left;
+}
+
+.next-steps h5 {
+  margin: 0 0 15px 0;
+  color: #0066cc;
+  font-size: 1rem;
+}
+
+.next-steps ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.next-steps li {
+  margin: 8px 0;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.appointment-status {
+  background-color: #fff3cd;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ffc107;
+}
+
+.appointment-status p {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.appointment-status .status-badge {
+  display: inline-block;
 }
 
 

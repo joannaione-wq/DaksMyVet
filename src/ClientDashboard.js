@@ -48,6 +48,9 @@ export default function ClientDashboard() {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [referenceNumber, setReferenceNumber] = useState("");
   const [showReferenceModal, setShowReferenceModal] = useState(false);
+  const [showPendingModal, setShowPendingModal] = useState(false);
+  const [pendingMessage, setPendingMessage] = useState("");
+  const [isSubmittingPayment, setIsSubmittingPayment] = useState(false);
 
   const services = [
     {
@@ -290,9 +293,37 @@ export default function ClientDashboard() {
   const handleServiceClick = (service) => {
     setSelectedService(service);
     setServiceSelected(service.name);
-    setSelectedDate("");
-    setSelectedTime("");
+
+    // If user has exactly one pet, preselect it
     if (pets.length === 1) setSelectedPet(pets[0].name);
+
+    // Preselect the first available date and time to allow quick booking
+    const dateOptions = generateDateOptions();
+    const firstAvailableDate = dateOptions.find((o) => !o.disabled)?.value || "";
+    if (firstAvailableDate) {
+      setSelectedDate(firstAvailableDate);
+
+      // compute time options for that date
+      const adminSlots = availableSlots.filter((s) => s.date === firstAvailableDate);
+      let times = [];
+      if (adminSlots.length > 0) times = adminSlots.map((s) => s.time);
+      else times = [
+        "09:00 AM",
+        "10:00 AM",
+        "11:00 AM",
+        "01:00 PM",
+        "02:00 PM",
+        "03:00 PM",
+        "04:00 PM",
+      ];
+
+      const firstAvailableTime = times.find((t) => !isSlotBooked(firstAvailableDate, t)) || "";
+      setSelectedTime(firstAvailableTime);
+    } else {
+      setSelectedDate("");
+      setSelectedTime("");
+    }
+
     setShowServiceModal(true);
   };
 
@@ -384,10 +415,11 @@ export default function ClientDashboard() {
   };
 
   const handleSubmitReference = async () => {
-    if (!referenceNumber.trim()) {
-      return alert("Please enter a reference number");
-    }
+    if (!referenceNumber.trim()) return alert("Please enter a reference number");
+    if (!paymentFor) return alert("No appointment found to submit payment for.");
 
+    console.log("Submitting payment", { userId: user?.uid, appointmentId: paymentFor?.id, referenceNumber });
+    setIsSubmittingPayment(true);
     try {
       await addDoc(collection(db, "payments"), {
         appointmentId: paymentFor.id,
@@ -403,21 +435,34 @@ export default function ClientDashboard() {
         status: "Pending Approval",
         createdAt: new Date(),
       });
-      
+
       await updateDoc(doc(db, "appointments", paymentFor.id), {
         status: "Pending Approval",
-        paymentStatus: "Pending Approval"
+        paymentStatus: "Pending Approval",
       });
-      
+
       setShowReferenceModal(false);
       setShowPaymentModal(false);
       setReferenceNumber("");
-      
-      alert("Payment submitted! Your reservation is being processed. Please wait for admin confirmation.");
+      setPendingMessage(
+        `Please wait — your ${paymentFor.service} appointment for ${paymentFor.petName} is now pending approval. The admin has been notified and will review your payment.`
+      );
+      setShowPendingModal(true);
     } catch (err) {
-      console.error(err);
-      alert("Failed to submit payment.");
+      console.error("Payment submission error:", err);
+      // show clearer error to user
+      const msg = err?.message || String(err);
+      alert(`Failed to submit payment: ${msg}`);
+    } finally {
+      setIsSubmittingPayment(false);
     }
+  };
+
+  const handlePendingClose = () => {
+    setShowPendingModal(false);
+    setPendingMessage("");
+    setPaymentFor(null);
+    setActiveTab("appointments");
   };
 
 return (
@@ -716,7 +761,113 @@ return (
     {showServiceModal && selectedService && (
       <div className="modal-overlay">
         <div className="modal-content service-booking-modal large-modal">
-          {/* ...service booking modal content... */}
+          <div className="modal-header">
+            <h4>Book {selectedService.name}</h4>
+            <button className="close-btn" onClick={() => setShowServiceModal(false)}>
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="service-booking-content">
+            {/* Service Image and Details */}
+            <div className="service-booking-image">
+              <img
+                src={selectedService.image || "/placeholder-service.png"}
+                alt={selectedService.name}
+              />
+              <div className="service-details">
+                <h5>{selectedService.name}</h5>
+                <p className="service-description">{selectedService.description}</p>
+                <p className="service-price-large">₱{selectedService.price}</p>
+              </div>
+            </div>
+
+            {/* Booking Form */}
+            <div className="booking-form">
+              {/* Select Pet */}
+              <div className="form-group">
+                <label htmlFor="pet-select">Select Pet *</label>
+                <select
+                  id="pet-select"
+                  value={selectedPet}
+                  onChange={(e) => setSelectedPet(e.target.value)}
+                >
+                  <option value="">Choose a pet</option>
+                  {pets.map((pet) => (
+                    <option key={pet.id} value={pet.name}>
+                      {pet.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Select Date */}
+              <div className="form-group">
+                <label htmlFor="date-select">Select Date *</label>
+                <select
+                  id="date-select"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                >
+                  <option value="">Choose a date</option>
+                  {generateDateOptions().map((option) => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.disabled}
+                    >
+                      {option.label}
+                      {option.isAdminAdded ? " (Admin Added)" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Select Time */}
+              <div className="form-group">
+                <label htmlFor="time-select">Select Time *</label>
+                <select
+                  id="time-select"
+                  value={selectedTime}
+                  onChange={(e) => setSelectedTime(e.target.value)}
+                  disabled={!selectedDate}
+                >
+                  <option value="">Choose a time</option>
+                  {generateTimeOptions().map((option) => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      disabled={isSlotBooked(selectedDate, option.value)}
+                    >
+                      {option.label}
+                      {isSlotBooked(selectedDate, option.value) ? " (Booked)" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Price Summary */}
+              <div className="price-summary">
+                <p><strong>Service Fee:</strong> ₱{selectedService.price}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="modal-buttons">
+            <button
+              className="primary-btn"
+              onClick={handleBookAppointment}
+              disabled={!selectedPet || !selectedDate || !selectedTime}
+            >
+              Proceed to Payment
+            </button>
+            <button
+              className="secondary-btn"
+              onClick={() => setShowServiceModal(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     )}
@@ -725,9 +876,158 @@ return (
     {showPaymentModal && paymentFor && (
       <div className="modal-overlay">
         <div className="modal-content payment-modal">
-          {/* ...payment modal content... */}
+          <div className="modal-header">
+            <h4>Confirm Payment</h4>
+            <button className="close-btn" onClick={() => setShowPaymentModal(false)}>
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="payment-content">
+            <div className="payment-summary">
+              <h5>Appointment Details</h5>
+              <div className="summary-row">
+                <span>Pet:</span>
+                <strong>{paymentFor.petName}</strong>
+              </div>
+              <div className="summary-row">
+                <span>Service:</span>
+                <strong>{paymentFor.service}</strong>
+              </div>
+              <div className="summary-row">
+                <span>Date & Time:</span>
+                <strong>{paymentFor.slot}</strong>
+              </div>
+              <hr />
+              <div className="summary-row total">
+                <span>Total Amount:</span>
+                <strong className="amount">₱{paymentFor.price}</strong>
+              </div>
+            </div>
+
+            <div className="payment-info">
+              <h5>Payment Method</h5>
+              <div className="payment-method">
+                <p><strong>GCash</strong></p>
+                <p className="gcash-number">0917-123-4567 (Sample)</p>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="reference">GCash Reference Number *</label>
+                <input
+                  id="reference"
+                  type="text"
+                  placeholder="Enter your GCash reference number"
+                  value={referenceNumber}
+                  onChange={(e) => setReferenceNumber(e.target.value)}
+                />
+              </div>
+
+              <p className="payment-note">
+                Please send the payment to the GCash number above and enter your reference number here.
+                Your appointment will be confirmed once the payment is verified by the admin.
+              </p>
+            </div>
+          </div>
+
+          <div className="modal-buttons">
+            <button
+              className="primary-btn"
+              onClick={() => setShowReferenceModal(true)}
+              disabled={!referenceNumber.trim()}
+            >
+              Submit Payment
+            </button>
+            <button
+              className="secondary-btn"
+              onClick={() => setShowPaymentModal(false)}
+            >
+              Back
+            </button>
+          </div>
         </div>
       </div>
     )}
+
+    {/* REFERENCE CONFIRMATION MODAL */}
+    {showReferenceModal && paymentFor && (
+      <div className="modal-overlay">
+        <div className="modal-content reference-modal">
+          <div className="modal-header">
+            <h4>Confirm Payment Submission</h4>
+            <button className="close-btn" onClick={() => setShowReferenceModal(false)}>
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="confirmation-content">
+            <p>You are about to submit payment with the following details:</p>
+            <div className="confirmation-details">
+              <p><strong>Reference Number:</strong> {referenceNumber}</p>
+              <p><strong>Amount:</strong> ₱{paymentFor.price}</p>
+              <p><strong>Pet:</strong> {paymentFor.petName}</p>
+              <p><strong>Service:</strong> {paymentFor.service}</p>
+            </div>
+            <p className="confirmation-note">
+              After submission, please wait for the admin to verify your payment.
+              You will receive a confirmation once the payment is approved.
+            </p>
+          </div>
+
+          <div className="modal-buttons">
+            <button
+              className="primary-btn"
+              onClick={handleSubmitReference}
+              disabled={isSubmittingPayment}
+            >
+              {isSubmittingPayment ? "Submitting..." : "Confirm & Submit"}
+            </button>
+            <button
+              className="secondary-btn"
+              onClick={() => setShowReferenceModal(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* PENDING APPROVAL MODAL */}
+    {showPendingModal && (
+      <div className="modal-overlay">
+        <div className="modal-content success-modal">
+          <div className="modal-header">
+            <h4>Payment Submitted</h4>
+            <button className="close-btn" onClick={handlePendingClose}>
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="success-content">
+            <div className="success-icon">
+              <div className="checkmark">✓</div>
+            </div>
+            <p className="success-message">{pendingMessage}</p>
+
+            <div className="appointment-status">
+              <p><strong>Current Status:</strong></p>
+              <span className="status-badge pending-approval">Pending Approval</span>
+            </div>
+          </div>
+
+          <div className="modal-buttons">
+            <button
+              className="primary-btn"
+              onClick={handlePendingClose}
+            >
+              View My Appointments
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
   </div>
-)}
+);
+}
