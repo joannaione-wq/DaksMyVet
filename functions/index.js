@@ -101,53 +101,102 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 // Use this function instead of client-side writes when you need elevated privileges.
 // -----------------------------
 exports.submitPayment = functions.https.onRequest(async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).send({ error: 'Method not allowed, use POST' });
+  if (req.method !== "POST") {
+    return res.status(405).send({error: "Method not allowed, use POST"});
   }
 
   try {
     const data = req.body;
     // Basic validation
     if (!data || !data.appointmentId || !data.userId || !data.referenceNumber) {
-      return res.status(400).send({ error: 'Missing required fields' });
+      return res.status(400).send({error: "Missing required fields"});
     }
 
     const paymentData = {
       appointmentId: data.appointmentId,
       userId: data.userId,
-      userName: data.userName || '',
-      userEmail: data.userEmail || '',
-      petName: data.petName || '',
-      service: data.service || '',
+      userName: data.userName || "",
+      userEmail: data.userEmail || "",
+      petName: data.petName || "",
+      service: data.service || "",
       amount: data.amount || 0,
-      method: data.method || 'GCash',
+      method: data.method || "GCash",
       referenceNumber: data.referenceNumber,
-      paymentType: data.paymentType || 'Reservation Payment',
-      status: 'Pending Approval',
+      paymentType: data.paymentType || "Reservation Payment",
+      status: "Pending Approval",
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };
 
     // Write payment and update appointment in a transaction
     await db.runTransaction(async (tx) => {
-      const apptRef = db.collection('appointments').doc(data.appointmentId);
+      const apptRef = db.collection("appointments").doc(data.appointmentId);
       const apptSnap = await tx.get(apptRef);
-      if (!apptSnap.exists) throw new Error('Appointment not found');
+      if (!apptSnap.exists) throw new Error("Appointment not found");
 
       // create payment doc
-      const paymentsRef = db.collection('payments').doc();
+      const paymentsRef = db.collection("payments").doc();
       tx.set(paymentsRef, paymentData);
 
       // update appointment
       tx.update(apptRef, {
-        status: 'Pending Approval',
-        paymentStatus: 'Pending Approval',
+        status: "Pending Approval",
+        paymentStatus: "Pending Approval",
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
     });
 
-    return res.status(200).send({ message: 'Payment recorded and appointment updated' });
+    return res.status(200).send({message: "Payment recorded and appointment updated"});
   } catch (err) {
-    console.error('submitPayment error:', err);
-    return res.status(500).send({ error: err.message || 'Internal error' });
+    console.error("submitPayment error:", err);
+    return res.status(500).send({error: err.message || "Internal error"});
+  }
+});
+
+// -----------------------------
+// Submit Payment (callable)
+// Same logic as the HTTP endpoint but exposed as an `onCall` function
+// so the client can invoke it securely using the Functions SDK.
+// Accepts data: { appointmentId, userId, userName, userEmail, petName, service, amount, method, referenceNumber }
+// -----------------------------
+exports.submitPaymentCallable = functions.https.onCall(async (data, context) => {
+  try {
+    if (!data || !data.appointmentId || !data.userId || !data.referenceNumber) {
+      throw new Error("Missing required fields");
+    }
+
+    const paymentData = {
+      appointmentId: data.appointmentId,
+      userId: data.userId,
+      userName: data.userName || "",
+      userEmail: data.userEmail || "",
+      petName: data.petName || "",
+      service: data.service || "",
+      amount: data.amount || 0,
+      method: data.method || "GCash",
+      referenceNumber: data.referenceNumber,
+      paymentType: data.paymentType || "Reservation Payment",
+      status: "Pending Approval",
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    await db.runTransaction(async (tx) => {
+      const apptRef = db.collection("appointments").doc(data.appointmentId);
+      const apptSnap = await tx.get(apptRef);
+      if (!apptSnap.exists) throw new Error("Appointment not found");
+
+      const paymentsRef = db.collection("payments").doc();
+      tx.set(paymentsRef, paymentData);
+
+      tx.update(apptRef, {
+        status: "Pending Approval",
+        paymentStatus: "Pending Approval",
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    });
+
+    return {message: "Payment recorded and appointment updated"};
+  } catch (err) {
+    console.error("submitPaymentCallable error:", err);
+    throw new functions.https.HttpsError("internal", err.message || "Internal error");
   }
 });

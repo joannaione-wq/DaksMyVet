@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "firebase-admin": "^13.6.0",
-    "firebase-functions": "^7.0.0"
+    "firebase-functions": "^7.0.0",
+    "vetsys": "file:.."
   },
   "devDependencies": {
     "eslint": "^8.15.0",
@@ -24,14 +25,21 @@
     "firebase-functions-test": "^3.4.1"
   },
   "eslintConfig": {
-    "extends": ["google"],
+    "extends": [
+      "google"
+    ],
     "env": {
       "es2021": true,
       "node": true
     },
     "rules": {
       "require-jsdoc": "off",
-      "max-len": ["error", { "code": 100 }]
+      "max-len": [
+        "error",
+        {
+          "code": 100
+        }
+      ]
     }
   }
 }
